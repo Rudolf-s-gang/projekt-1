@@ -1,0 +1,23 @@
+# Godot 4 generated data and local editor state
+.godot/
+/android/
+
+# Exported builds
+build/
+builds/
+export/
+exports/
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+*.tmp
+*.swp
+*~
+
+# Local secrets and environment files
+.env
+.env.*
+!.env.example
+*.key
+*.pem
