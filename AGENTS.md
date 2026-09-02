@@ -5,7 +5,8 @@ Toto je společný projekt v Godotu 4.4. Členové týmu pracují v Godotu; Code
 ## Základní bezpečnost
 
 - Nikdy nepoužívej `git push --force`, `git reset --hard` ani nepřepisuj historii.
-- Nikdy nevytvářej běžný commit přímo na `main` a nikdy automaticky neslučuj pull request.
+- Nikdy nevytvářej běžný commit přímo na `main` a nikdy neslučuj pull request.
+- Neprováděj žádný `git merge` ani `git rebase`, a to ani na pracovní větvi. Konflikty pouze diagnostikuj a předej vlastníkovi projektu.
 - Nikdy nemaž, nestashuj ani nepřepisuj lokální změny bez výslovného souhlasu uživatele.
 - Nikdy necommituj `.godot/`, buildy, exporty, `.env`, tokeny, hesla, klíče nebo lokální nastavení editoru.
 - Před commitem zkontroluj `git status --short`, celý diff a staged diff. Stageuj pouze ověřené soubory explicitními cestami.
@@ -54,10 +55,10 @@ Naplánovaná úloha běží každých 60 minut přímo v lokálním projektu.
 - Nevydávej menší počet synchronizací za prevenci konfliktů: odklad může konflikt pouze přesunout na konec a zvětšit ho. U práce delší než jeden den nebo při změnách stejných scén upozorni uživatele, že je vhodná řízená synchronizace.
 - `končím` vždy vytvoří PR bez automatického slučování `main` do pracovní větve. GitHub potom ukáže, zda lze PR sloučit čistě.
 - Pokud PR nemá konflikt, vlastník jej může po kontrole sloučit metodou squash.
-- Pokud PR konflikt má, řeš jej v samostatné řízené relaci na pracovní větvi, nikdy přímo na `main`.
-- Před řízenou synchronizací musí být pracovní adresář čistý a všechny změny commitnuté a pushnuté. Potom použij `git fetch origin` a merge `origin/main` do pracovní větve. Nepoužívej rebase na již sdílené větvi, protože by vyžadoval přepis historie.
-- Pokud merge vyvolá konflikt, nic automaticky nevybírej jako `ours` nebo `theirs`. Vyjmenuj konfliktní soubory a vysvětli význam obou verzí. U `.tscn`, `.tres` a `project.godot` požádej vlastníka změny nebo vedoucího projektu o rozhodnutí. Po vyřešení spusť Godot kontrolu, vytvoř merge commit a pushni stejnou pracovní větev; PR se aktualizuje automaticky.
-- Pokud nelze konflikt bezpečně vyřešit, použij `git merge --abort`, zachovej původní pracovní větev a aktivuj bezpečnostní zámek.
+- Pokud PR konflikt má, neprováděj merge, rebase ani automatickou úpravu konfliktních souborů. Aktivuj bezpečnostní zámek.
+- Pomocí read-only kontrol zjisti, které soubory se překrývají, a srozumitelně popiš rozdíl mezi pracovní větví a `origin/main`. U `.tscn`, `.tres` a `project.godot` výslovně upozorni na riziko poškození Godot scény nebo nastavení.
+- Vrať vlastníkovi projektu název pracovní větve, odkaz na PR, seznam dotčených souborů a doporučený další postup. Samotné vyřešení a sloučení konfliktu musí provést vlastník nebo jiný výslovně pověřený člověk mimo tento automatický pracovní postup.
+- Původní pracovní větev a její historii vždy zachovej beze změny.
 
 ## Bezpečnostní zámek
 
