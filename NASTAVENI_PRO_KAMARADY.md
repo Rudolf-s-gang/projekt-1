@@ -36,13 +36,13 @@ Před prací člen napíše pouze:
 začínám
 ```
 
-Pracovat v Godotu začne až po zeleném potvrzení Codexu. Na konci uloží projekt v Godotu a napíše:
+Codex se následně zeptá, na čem bude člen pracovat a zda chce začít z aktuálního `main`, nebo pokračovat z konkrétní existující větve. Pracovat v Godotu začne až po zeleném potvrzení Codexu. Na konci uloží projekt v Godotu a napíše:
 
 ```text
 končím
 ```
 
-Codex vytvoří závěrečný commit, push a pull request. Pull request zkontroluje a sloučí vlastník nebo jiný schválený člen.
+Codex vždy vytvoří závěrečný commit, push a pull request do `main`, ale nikdy jej nesloučí. Pull request zkontroluje a sloučí vlastník nebo jiný schválený člen.
 
 ## Omezení automatických záloh
 
