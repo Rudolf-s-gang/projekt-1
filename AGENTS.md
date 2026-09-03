@@ -28,7 +28,7 @@ Toto je společný projekt v Godotu 4.4. Členové týmu pracují v Godotu; Code
 
 ## Automatický checkpoint
 
-Naplánovaná úloha běží každých 60 minut přímo v lokálním projektu.
+Naplánovaná úloha běží každých 60 minut přímo v lokálním projektu. Musí být připojená k jednomu trvalému řídicímu chatu daného uživatele. Nesmí být vytvořená jako samostatná úloha, která při každém běhu zakládá nový chat.
 
 1. Pokud `.git/ai-work-session` neexistuje, nic neměň.
 2. Ověř bezpečnostní podmínky níže a že aktuální větev odpovídá relaci a není `main`.
@@ -37,6 +37,7 @@ Naplánovaná úloha běží každých 60 minut přímo v lokálním projektu.
 5. Vytvoř checkpoint commit `chore: checkpoint <kratky-popis-prace>` podle popisu uloženého v `.git/ai-work-session` a pushni pouze aktivní pracovní větev.
 6. Aktualizuj čas posledního úspěšného checkpointu v `.git/ai-work-session`.
 7. Nevytvářej při každém checkpointu nový pull request.
+8. Při úspěchu napiš do řídicího chatu maximálně jeden krátký řádek s časem a hashem commitu. Pokud nejsou změny, nevypisuj zbytečné shrnutí.
 
 ## Povel „končím“
 
