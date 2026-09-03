@@ -25,7 +25,13 @@ cd projekt-1
 ## 3. Jednorázový prompt pro Codex
 
 ```text
-Přečti kompletně AGENTS.md a nastav tento lokální projekt pro jednoduché povely „začínám“ a „končím“. Ověř Git, origin, GitHub přihlášení, oprávnění a Godot. Potom vytvoř pro tento lokální projekt naplánovanou úlohu každých 60 minut, která provádí přesně postup „Automatický checkpoint“ z AGENTS.md. Úloha musí pracovat přímo v lokálním projektu, ne ve worktree, a při jakémkoliv problému musí aktivovat bezpečnostní zámek. Použij co nejomezenější oprávnění. Nic teď necommituj ani nepushuj. Nakonec proveď bezpečný test a řekni, kdy proběhne první automatická kontrola.
+Tento chat bude trvalý řídicí chat pro zálohování projektu Projekt 1. Přečti kompletně AGENTS.md a nastav tento lokální projekt pro jednoduché povely „začínám“ a „končím“. Ověř Git, origin, GitHub přihlášení, oprávnění a Godot.
+
+Zruš případnou samostatnou automatizaci tohoto projektu, která při každém běhu vytváří nový chat. Místo ní naplánuj každých 60 minut pokračování přímo v tomto existujícím chatu. Automatizace musí pracovat přímo v lokálním projektu, ne ve worktree, a provádět přesně postup „Automatický checkpoint“ z AGENTS.md.
+
+Pokud .git/ai-work-session neexistuje, nic neměň a neposílej běžné hlášení. Při úspěšném checkpointu napiš maximálně jeden krátký řádek s časem a hashem commitu. Pokud nejsou změny, nevypisuj zbytečné shrnutí. Při jakémkoliv problému aktivuj bezpečnostní zámek.
+
+Nikdy neprováděj merge, rebase, force push, reset --hard, stash ani commit nebo push do main. Použij co nejomezenější oprávnění. Nic teď necommituj ani nepushuj. Nakonec proveď bezpečný test, ověř, že automatizace nevytváří nové chaty, a řekni, kdy proběhne první automatická kontrola.
 ```
 
 ## 4. Každodenní použití
