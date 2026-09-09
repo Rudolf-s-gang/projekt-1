@@ -28,16 +28,30 @@ Toto je společný projekt v Godotu 4.4. Členové týmu pracují v Godotu; Code
 
 ## Automatický checkpoint
 
-Naplánovaná úloha běží každých 60 minut přímo v lokálním projektu. Musí být připojená k jednomu trvalému řídicímu chatu daného uživatele. Nesmí být vytvořená jako samostatná úloha, která při každém běhu zakládá nový chat.
+Naplánovaná úloha běží každých 60 minut přímo v lokálním projektu. Musí být připojená k jednomu samostatnému trvalému zálohovacímu chatu daného uživatele. Tento chat se používá pouze pro automatické kontroly a nesmí při každém běhu zakládat další chat.
 
-1. Pokud `.git/ai-work-session` neexistuje, nic neměň.
+1. Pokud `.git/ai-work-session` neexistuje, proveď pouze níže uvedený postup „Nouzová záloha bez aktivní relace“.
 2. Ověř bezpečnostní podmínky níže a že aktuální větev odpovídá relaci a není `main`.
 3. Pokud nejsou smysluplné změny, nevytvářej commit.
 4. Prohlédni změny a spusť dostupnou Godot kontrolu. Preferuj `godot --headless --path . --editor --quit`, případně `godot4`.
 5. Vytvoř checkpoint commit `chore: checkpoint <kratky-popis-prace>` podle popisu uloženého v `.git/ai-work-session` a pushni pouze aktivní pracovní větev.
 6. Aktualizuj čas posledního úspěšného checkpointu v `.git/ai-work-session`.
 7. Nevytvářej při každém checkpointu nový pull request.
-8. Při úspěchu napiš do řídicího chatu maximálně jeden krátký řádek s časem a hashem commitu. Pokud nejsou změny, nevypisuj zbytečné shrnutí.
+8. Při úspěchu napiš do zálohovacího chatu maximálně jeden krátký řádek s časem a hashem commitu. Pokud nejsou změny, nevypisuj zbytečné shrnutí.
+
+## Nouzová záloha bez aktivní relace
+
+Tento postup je výjimka pro případ, kdy člen týmu zapomněl před prací napsat `začínám`. Nesmí nahrazovat běžnou pracovní relaci.
+
+1. Pokud `.git/ai-work-session` neexistuje, spusť nejdřív pouze read-only kontrolu `git status --short`. Pokud nejsou žádné smysluplné změny, okamžitě skonči bez dalších kontrol, změn a hlášení.
+2. Pokud změny existují, ověř kořen repozitáře, očekávaný `origin`, `gh auth status`, absenci probíhajícího merge, rebase nebo cherry-picku a zkontroluj celý diff, seznam souborů a jejich velikosti.
+3. Zastav postup při tajném, podezřelém, nesouvisejícím, ignorovaném, zakázaném nebo neočekávaně velkém souboru. Nikdy nezahrnuj `.godot/`, buildy, exporty, `.env`, tokeny, hesla, klíče ani lokální nastavení editoru.
+4. Ověř, že Godot právě nezapisuje nekonzistentní soubory, a spusť dostupnou Godot kontrolu. Preferuj `godot --headless --path . --editor --quit`, případně `godot4`.
+5. Z aktuálního `HEAD` vytvoř novou větev `rescue/<github-uzivatel>/zapomenuta-relace-<YYYYMMDD-HHMMSS>`. Nikdy nouzově necommituj přímo na `main`, do původní pracovní větve ani do větve jiného člověka.
+6. Explicitními cestami stageuj pouze ověřené související soubory. Všechny změny z tohoto jednoho nálezu ulož do právě jednoho commitu `chore: rescue changes without active session` a pushni pouze novou záchrannou větev.
+7. Nevytvářej pull request ani `.git/ai-work-session` a záchrannou větev automaticky neslučuj. Původní historii zachovej.
+8. Upozorni uživatele jedním krátkým řádkem s názvem větve a hashem commitu. Výslovně mu řekni, aby přestal upravovat projekt a požádal vlastníka o kontrolu záchranné větve.
+9. Při jakékoli nejasnosti aktivuj bezpečnostní zámek a nic necommituj ani nepushuj.
 
 ## Povel „končím“
 
