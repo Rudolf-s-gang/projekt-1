@@ -22,14 +22,23 @@ cd projekt-1
 
 Člen otevře tuto složku v Godotu i v Codexu jako hlavní lokální projekt.
 
-## 3. Jednorázový prompt pro Codex
+## 3. Dva trvalé chaty v Codexu
+
+Každý člen používá právě dva trvalé chaty nad stejnou lokální složkou projektu:
+
+- `Projekt 1 – Git ovládání` pro povely `začínám` a `končím`,
+- `Projekt 1 – automatické zálohování` pouze pro hodinovou automatizaci.
+
+Oba chaty musí pracovat přímo ve stejné lokální složce naklonovaného projektu, ne v odděleném worktree. Automatizace se nepřenáší přes GitHub; každý člen ji musí jednou vytvořit na svém počítači.
+
+V chatu `Projekt 1 – Git ovládání` vlož tento jednorázový prompt:
 
 ```text
-Tento chat bude trvalý řídicí chat pro zálohování projektu Projekt 1. Přečti kompletně AGENTS.md a nastav tento lokální projekt pro jednoduché povely „začínám“ a „končím“. Ověř Git, origin, GitHub přihlášení, oprávnění a Godot.
+Tento chat bude trvalý chat pro Git ovládání projektu Projekt 1. Přečti kompletně AGENTS.md a nastav tento lokální projekt pro jednoduché povely „začínám“ a „končím“. Ověř Git, očekávaný origin, GitHub přihlášení, identitu uživatele, oprávnění a Godot. Vždy pracuj přímo v tomto lokálním projektu, ne ve worktree.
 
-Zruš případnou samostatnou automatizaci tohoto projektu, která při každém běhu vytváří nový chat. Místo ní naplánuj každých 60 minut pokračování přímo v tomto existujícím chatu. Automatizace musí pracovat přímo v lokálním projektu, ne ve worktree, a provádět přesně postup „Automatický checkpoint“ z AGENTS.md.
+Vytvoř právě jeden samostatný trvalý chat s názvem „Projekt 1 – automatické zálohování“ nad stejnou lokální složkou. Připoj k němu jednu hodinovou automatizaci. Automatizace musí pracovat přímo v lokálním projektu, ne ve worktree, a při každém běhu kompletně přečíst AGENTS.md. Nesmí při jednotlivých bězích vytvářet další chaty.
 
-Pokud .git/ai-work-session neexistuje, nic neměň a neposílej běžné hlášení. Při úspěšném checkpointu napiš maximálně jeden krátký řádek s časem a hashem commitu. Pokud nejsou změny, nevypisuj zbytečné shrnutí. Při jakémkoliv problému aktivuj bezpečnostní zámek.
+Pokud .git/ai-work-session existuje, prováděj pouze postup „Automatický checkpoint“. Pokud relace neexistuje, proveď pouze postup „Nouzová záloha bez aktivní relace“. Bez relace a bez změn okamžitě skonči bez hlášení. Nouzovou zálohu vždy ulož do právě jednoho commitu na nové větvi rescue/<github-uzivatel>/zapomenuta-relace-<YYYYMMDD-HHMMSS>; nikdy ji neukládej na main ani do původní větve a nevytvářej pro ni automaticky pull request.
 
 Nikdy neprováděj merge, rebase, force push, reset --hard, stash ani commit nebo push do main. Použij co nejomezenější oprávnění. Nic teď necommituj ani nepushuj. Nakonec proveď bezpečný test, ověř, že automatizace nevytváří nové chaty, a řekni, kdy proběhne první automatická kontrola.
 ```
@@ -49,6 +58,8 @@ končím
 ```
 
 Codex vždy vytvoří závěrečný commit, push a pull request do `main`, ale nikdy jej nesloučí. Pull request zkontroluje a sloučí vlastník nebo jiný schválený člen.
+
+Pokud člen zapomene napsat `začínám`, automatizace může bezpečně ověřené změny zachránit do jediného commitu na nové větvi `rescue/...`. Po upozornění už člen projekt neupravuje a požádá vlastníka o kontrolu. Codex záchrannou větev nikdy automaticky nesloučí ani z ní nevytvoří pull request.
 
 ## Omezení automatických záloh
 
