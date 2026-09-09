@@ -45,6 +45,17 @@ gh auth status
 
 Pokud některý příkaz pro daný systém nefunguje, nic neobcházej neověřeným instalačním skriptem. Otevři aktuální oficiální návod na `https://git-scm.com/install/` nebo `https://cli.github.com/` a požádej uživatele o schválení dalšího postupu.
 
+## Vyhledání existujícího Godotu 4
+
+Godot 4 už je na počítači člena nainstalovaný. Nikdy jej neinstaluj, neaktualizuj, neodinstalovávej ani neměň systémovou proměnnou `PATH`. Pouze read-only kontrolami najdi jeho spustitelný soubor a ověř verzi pomocí `--version`.
+
+- Nejdřív zkus příkazy dostupné v `PATH`, například `godot`, `godot4` nebo odpovídající příkaz zjištěný systémovým vyhledáváním.
+- Na macOS zkontroluj také běžné umístění `/Applications/Godot.app/Contents/MacOS/Godot` a uživatelovu složku `Applications`.
+- Na Windows použij `Get-Command` a běžná umístění aplikací. Na Linuxu ověř také existující instalaci přes správce balíčků nebo Flatpak, ale nic neinstaluj.
+- Neprohledávej bez omezení celý disk. Pokud Godot nenajdeš v běžných umístěních, požádej uživatele, aby vybral aplikaci Godot nebo zadal přesnou cestu ke spustitelnému souboru.
+- Po naklonování ulož absolutní cestu ke spustitelnému souboru do lokálního souboru `.git/ai-local-config` jako `GODOT_EXECUTABLE=<absolutni-cesta>`. Soubor nikdy necommituj, nevkládej do něj žádné tajné údaje, nikdy jej nespouštěj ani nenačítej jako shellový skript a před každým použitím ověř, že cesta stále ukazuje na Godot 4.
+- Cestu z `.git/ai-local-config` používej pro všechny headless kontroly v tomto lokálním projektu a při spuštění ji bezpečně cituj i tehdy, když obsahuje mezery. Pokud soubor nebo program chybí, zopakuj read-only hledání. Pokud dostupná verze není řady Godot 4, aktivuj bezpečnostní zámek.
+
 ## Základní bezpečnost
 
 - Nikdy nepoužívej `git push --force`, `git reset --hard` ani nepřepisuj historii.
@@ -76,7 +87,7 @@ Naplánovaná úloha běží každých 60 minut přímo v lokálním projektu. M
 1. Pokud `.git/ai-work-session` neexistuje, proveď pouze níže uvedený postup „Nouzová záloha bez aktivní relace“.
 2. Ověř bezpečnostní podmínky níže a že aktuální větev odpovídá relaci a není `main`.
 3. Pokud nejsou smysluplné změny, nevytvářej commit.
-4. Prohlédni změny a spusť dostupnou Godot kontrolu. Preferuj `godot --headless --path . --editor --quit`, případně `godot4`.
+4. Prohlédni změny a spusť dostupnou Godot kontrolu pomocí cesty k existujícímu Godotu 4 zjištěné při nastavení. Godot nikdy kvůli kontrole neinstaluj ani neaktualizuj.
 5. Vytvoř checkpoint commit `chore: checkpoint <kratky-popis-prace>` podle popisu uloženého v `.git/ai-work-session` a pushni pouze aktivní pracovní větev.
 6. Aktualizuj čas posledního úspěšného checkpointu v `.git/ai-work-session`.
 7. Nevytvářej při každém checkpointu nový pull request.
@@ -89,7 +100,7 @@ Tento postup je výjimka pro případ, kdy člen týmu zapomněl před prací na
 1. Pokud `.git/ai-work-session` neexistuje, spusť nejdřív pouze read-only kontrolu `git status --short`. Pokud nejsou žádné smysluplné změny, okamžitě skonči bez dalších kontrol, změn a hlášení.
 2. Pokud změny existují, ověř kořen repozitáře, očekávaný `origin`, `gh auth status`, absenci probíhajícího merge, rebase nebo cherry-picku a zkontroluj celý diff, seznam souborů a jejich velikosti.
 3. Zastav postup při tajném, podezřelém, nesouvisejícím, ignorovaném, zakázaném nebo neočekávaně velkém souboru. Nikdy nezahrnuj `.godot/`, buildy, exporty, `.env`, tokeny, hesla, klíče ani lokální nastavení editoru.
-4. Ověř, že Godot právě nezapisuje nekonzistentní soubory, a spusť dostupnou Godot kontrolu. Preferuj `godot --headless --path . --editor --quit`, případně `godot4`.
+4. Ověř, že Godot právě nezapisuje nekonzistentní soubory, a spusť dostupnou Godot kontrolu pomocí cesty k existujícímu Godotu 4 zjištěné při nastavení. Godot nikdy kvůli kontrole neinstaluj ani neaktualizuj.
 5. Z aktuálního `HEAD` vytvoř novou větev `rescue/<github-uzivatel>/zapomenuta-relace-<YYYYMMDD-HHMMSS>`. Nikdy nouzově necommituj přímo na `main`, do původní pracovní větve ani do větve jiného člověka.
 6. Explicitními cestami stageuj pouze ověřené související soubory. Všechny změny z tohoto jednoho nálezu ulož do právě jednoho commitu `chore: rescue changes without active session` a pushni pouze novou záchrannou větev.
 7. Nevytvářej pull request ani `.git/ai-work-session` a záchrannou větev automaticky neslučuj. Původní historii zachovej.
