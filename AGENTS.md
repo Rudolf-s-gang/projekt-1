@@ -2,6 +2,49 @@
 
 Toto je společný projekt v Godotu 4.4. Členové týmu pracují v Godotu; Codex za ně bezpečně provádí synchronizaci, checkpoint commity, push a pull requesty.
 
+## Jednorázová instalace Git a GitHub CLI
+
+Pokud členovi chybí `git` nebo `gh`, Codex mu podle operačního systému zobrazí odpovídající příkazy níže. Instalaci systémových balíčků nikdy nespouštěj bez jeho výslovného souhlasu.
+
+### macOS s Homebrew
+
+```bash
+brew install git gh
+```
+
+Pokud Homebrew není nainstalovaný, Git lze získat také pomocí nástrojů Applu:
+
+```bash
+xcode-select --install
+```
+
+GitHub CLI je potom stále potřeba nainstalovat samostatně, například přes Homebrew příkazem `brew install gh`.
+
+### Windows v PowerShellu
+
+```powershell
+winget install --id Git.Git -e --source winget
+winget install --id GitHub.cli -e --source winget
+```
+
+### Debian nebo Ubuntu
+
+```bash
+sudo apt update
+sudo apt install git gh
+```
+
+Po instalaci vždy ověř oba nástroje a přihlas vlastní GitHub účet člena:
+
+```bash
+git --version
+gh --version
+gh auth login -h github.com
+gh auth status
+```
+
+Pokud některý příkaz pro daný systém nefunguje, nic neobcházej neověřeným instalačním skriptem. Otevři aktuální oficiální návod na `https://git-scm.com/install/` nebo `https://cli.github.com/` a požádej uživatele o schválení dalšího postupu.
+
 ## Základní bezpečnost
 
 - Nikdy nepoužívej `git push --force`, `git reset --hard` ani nepřepisuj historii.
