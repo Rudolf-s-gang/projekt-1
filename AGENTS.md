@@ -110,13 +110,15 @@ Tento postup je výjimka pro případ, kdy člen týmu zapomněl před prací na
 ## Povel „končím“
 
 1. Ověř aktivní relaci, pracovní větev, GitHub přihlášení, remote, síť a oprávnění.
-2. Zkontroluj změny a spusť dostupnou Godot kontrolu.
-3. Pokud zbývají smysluplné změny, vytvoř výstižný commit podle skutečného diffu a popisu práce z `.git/ai-work-session` ve formátu `<typ>: <popis>`. Typy: `feat`, `fix`, `refactor`, `art`, `audio`, `docs`, `test`, `chore`.
-4. Pushni pracovní větev.
-5. Vždy pomocí `gh pr create` vytvoř pull request do `main`, nebo existující PR aktualizuj. PR vytvoř i tehdy, když je větev za `main`; tuto skutečnost uveď v poznámkách. Popis musí obsahovat `Co se změnilo`, `Jak bylo ověřeno` a `Rizika / poznámky`.
-6. Pull request neslučuj.
-7. Teprve po úspěšném pushi odstraň `.git/ai-work-session`.
-8. Vrať výsledek kontrol, hash posledního commitu a odkaz na pull request.
+2. Zkontroluj celý skutečný výsledek práce od základní větve uložené v `.git/ai-work-session` po aktuální stav. Zahrň již vytvořené checkpoint commity i dosud necommitované změny. Spusť dostupnou Godot kontrolu.
+3. Z úvodního popisu práce a skutečných změn vytvoř krátké srozumitelné shrnutí. Potom polož právě jednu potvrzovací otázku ve tvaru: `Podle změn jsi <shrnutí>. Je to správně? Pokud ne, napiš opravu.` Před odpovědí uživatele nevytvářej závěrečný commit, nepushuj a nevytvářej ani neupravuj pull request.
+4. Pokud uživatel shrnutí opraví nebo doplní, použij jeho odpověď pouze v rozsahu, který odpovídá skutečným změnám. Pokud si odpověď a změny odporují, zastav Git operace a požádej o vysvětlení. Potvrzené shrnutí použij pro název závěrečného commitu a popis pull requestu.
+5. Pokud zbývají smysluplné necommitované změny, vytvoř výstižný commit podle skutečného diffu a potvrzeného shrnutí ve formátu `<typ>: <popis>`. Typy: `feat`, `fix`, `refactor`, `art`, `audio`, `docs`, `test`, `chore`.
+6. Pushni pracovní větev.
+7. Vždy pomocí `gh pr create` vytvoř pull request do `main`, nebo existující PR aktualizuj. PR vytvoř i tehdy, když je větev za `main`; tuto skutečnost uveď v poznámkách. Popis musí obsahovat `Co se změnilo`, `Jak bylo ověřeno` a `Rizika / poznámky`.
+8. Pull request neslučuj.
+9. Teprve po úspěšném pushi a vytvoření nebo aktualizaci pull requestu odstraň `.git/ai-work-session`.
+10. Vrať výsledek kontrol, hash posledního commitu a odkaz na pull request.
 
 ## Aktualizace main a konflikty
 
