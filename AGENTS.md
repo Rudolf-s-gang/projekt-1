@@ -67,9 +67,21 @@ Godot 4 už je na počítači člena nainstalovaný. Nikdy jej neinstaluj, neakt
 - Při konfliktu, podezřelém souboru nebo nesouvisejících změnách zastav Git operace a požádej o rozhodnutí.
 - Mluv s uživatelem česky a Git vysvětluj jednoduše.
 
+## Rychlý režim pro „začínám“ a „končím“
+
+Cílem je dokončit běžné spuštění nebo ukončení relace bez zbytečných čekání a opakovaného potvrzování. Bezpečnostní pravidla a bezpečnostní zámek mají vždy přednost před rychlostí.
+
+- Pokud v `.git/ai-local-config` chybí nastavení `FAST_GIT_FLOW`, připoj k otázkám při nejbližším povelu `začínám` ještě jednu volbu ve stejné zprávě: `Chceš zapnout rychlý režim? V něm budu provádět běžné bezpečné kroky začínám a končím bez dalších textových potvrzení; při konfliktu, nejasnosti nebo riziku se vždy zastavím.` Uživatel odpoví na všechny otázky jedinou zprávou.
+- Volbu ulož pouze lokálně do `.git/ai-local-config` jako `FAST_GIT_FLOW=true` nebo `FAST_GIT_FLOW=false`. Tento údaj je preference, nikoli oprávnění operačního systému nebo aplikace.
+- Při zapnutí nabídni uživateli jednorázové trvalé povolení pouze pro úzce vymezené rutinní příkazy potřebné v tomto projektu: bezpečné Git kontroly, `fetch`, `pull --ff-only`, vytvoření nebo přepnutí pracovní větve, `add`, `commit`, běžný `push`, `gh auth status`, vytvoření či aktualizaci PR a headless kontrolu známým Godotem. Pokud rozhraní nabízí možnost typu „vždy povolit“ pro konkrétní příkaz nebo úzký prefix, vysvětli ji a nech ji uživatele zvolit osobně.
+- Nikdy sám nevypínej ani neobcházej bezpečnostní potvrzení Codexu, operačního systému nebo GitHubu. Nikdy nežádej trvalé povolení pro obecný shell, mazání, instalaci, přístup k tajným údajům ani zakázané Git operace. Pokud trvalé povolení není dostupné, seskup požadavky na nezbytné minimum.
+- Read-only kontroly a kroky již výslovně povolené v tomto pracovním postupu prováděj bez dodatečných textových otázek. Nezávislé kontroly spusť společně, neopakuj stejnou kontrolu bez důvodu a po změně stavu ověř pouze to, co se mohlo změnit.
+- V rychlém režimu nevyžaduj potvrzení navrženého shrnutí při povelu `končím`, pokud shrnutí jednoznačně odpovídá úvodnímu popisu a skutečným změnám. Při rozporu, nejasném rozsahu nebo podezřelé změně se vždy zeptej a před odpovědí necommituj ani nepushuj.
+- Zapnutí rychlého režimu nikdy nepovoluje merge, rebase, force push, commit na `main`, automatické řešení konfliktů ani jinou operaci zakázanou tímto souborem.
+
 ## Povel „začínám“
 
-1. Nejdřív polož uživateli přesně dvě krátké otázky a před odpovědí neprováděj žádné Git změny:
+1. Nejdřív polož uživateli v jedné zprávě přesně dvě krátké otázky a před odpovědí neprováděj žádné Git změny. Pokud ještě není uložená volba rychlého režimu, připoj do stejné zprávy také otázku uvedenou v části „Rychlý režim pro začínám a končím“, aby uživatel odpověděl pouze jednou:
    - `Na čem budeš pracovat? Napiš krátký popis změny.`
    - `Chceš začít z aktuálního main, nebo pokračovat z jiné existující větve? Pokud z jiné, napiš její název.`
 2. Z popisu práce vytvoř krátký ASCII identifikátor. Použij jej v názvu nové větve a jako kontext pro názvy checkpointů, závěrečného commitu a pull requestu. Nevymýšlej obsah změny, který uživatel neuvedl.
@@ -111,9 +123,9 @@ Tento postup je výjimka pro případ, kdy člen týmu zapomněl před prací na
 
 1. Ověř aktivní relaci, pracovní větev, GitHub přihlášení, remote, síť a oprávnění.
 2. Zkontroluj celý skutečný výsledek práce od základní větve uložené v `.git/ai-work-session` po aktuální stav. Zahrň již vytvořené checkpoint commity i dosud necommitované změny. Spusť dostupnou Godot kontrolu.
-3. Z úvodního popisu práce a skutečných změn vytvoř krátké srozumitelné shrnutí. Potom polož právě jednu potvrzovací otázku ve tvaru: `Podle změn jsi <shrnutí>. Je to správně? Pokud ne, napiš opravu.` Před odpovědí uživatele nevytvářej závěrečný commit, nepushuj a nevytvářej ani neupravuj pull request.
-4. Pokud uživatel shrnutí opraví nebo doplní, použij jeho odpověď pouze v rozsahu, který odpovídá skutečným změnám. Pokud si odpověď a změny odporují, zastav Git operace a požádej o vysvětlení. Potvrzené shrnutí použij pro název závěrečného commitu a popis pull requestu.
-5. Pokud zbývají smysluplné necommitované změny, vytvoř výstižný commit podle skutečného diffu a potvrzeného shrnutí ve formátu `<typ>: <popis>`. Typy: `feat`, `fix`, `refactor`, `art`, `audio`, `docs`, `test`, `chore`.
+3. Z úvodního popisu práce a skutečných změn vytvoř krátké srozumitelné shrnutí. Pokud je `FAST_GIT_FLOW=true` a shrnutí jednoznačně odpovídá plánu i změnám, použij je bez další otázky a pokračuj. Jinak polož právě jednu potvrzovací otázku ve tvaru: `Podle změn jsi <shrnutí>. Je to správně? Pokud ne, napiš opravu.` Před vyžádanou odpovědí uživatele nevytvářej závěrečný commit, nepushuj a nevytvářej ani neupravuj pull request.
+4. Pokud uživatel shrnutí opraví nebo doplní, použij jeho odpověď pouze v rozsahu, který odpovídá skutečným změnám. Pokud si odpověď a změny odporují, zastav Git operace a požádej o vysvětlení. Potvrzené nebo v rychlém režimu jednoznačně odvozené shrnutí použij pro název závěrečného commitu a popis pull requestu.
+5. Pokud zbývají smysluplné necommitované změny, vytvoř výstižný commit podle skutečného diffu a potvrzeného nebo v rychlém režimu jednoznačně odvozeného shrnutí ve formátu `<typ>: <popis>`. Typy: `feat`, `fix`, `refactor`, `art`, `audio`, `docs`, `test`, `chore`.
 6. Pushni pracovní větev.
 7. Vždy pomocí `gh pr create` vytvoř pull request do `main`, nebo existující PR aktualizuj. PR vytvoř i tehdy, když je větev za `main`; tuto skutečnost uveď v poznámkách. Popis musí obsahovat `Co se změnilo`, `Jak bylo ověřeno` a `Rizika / poznámky`.
 8. Pull request neslučuj.
