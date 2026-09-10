@@ -1,7 +1,21 @@
-[gd_scene load_steps=2 format=3 uid="uid://cl2ga2sdnev7x"]
+[gd_scene load_steps=3 format=3 uid="uid://cl2ga2sdnev7x"]
 
 [ext_resource type="PackedScene" uid="uid://dd1o35fke0rvh" path="res://scenes/player.tscn" id="1_uwrxv"]
+[ext_resource type="Texture2D" uid="uid://bqg4ts104n0xu" path="res://assets/sprites/mistnost.jpg" id="2_yqjtg"]
 
 [node name="Game" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource("1_uwrxv")]
+top_level = true
+position = Vector2(414, 276)
+scale = Vector2(0.32, 0.319999)
+
+[node name="pozadí" type="Sprite2D" parent="."]
+position = Vector2(0, -4.76837e-07)
+scale = Vector2(1.33496, 1.15142)
+texture = ExtResource("2_yqjtg")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(-2, 0)
+scale = Vector2(8.04, 1)
+zoom = Vector2(0.4, 0.4)
