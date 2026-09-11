@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dd1o35fke0rvh"]
+[gd_scene load_steps=17 format=3 uid="uid://dd1o35fke0rvh"]
 
 [ext_resource type="Texture2D" uid="uid://dq2ivstq2l05o" path="res://assets/sprites/walk_frame0.png" id="1_tuyoq"]
 [ext_resource type="Texture2D" uid="uid://doerpv66r4rur" path="res://assets/sprites/walk_frame1.png" id="2_fjrip"]
@@ -10,33 +10,110 @@
 [sub_resource type="GDScript" id="GDScript_3vyb7"]
 script/source = "extends CharacterBody2D
 
+@export var speed: float = 100
 
-const SPEED = 300.0
-const JUMP_VELOCITY = -400.0
+@onready var agent: NavigationAgent2D = $NavigationAgent2D
+# Uložíme si odkaz na uzel, který přehrává obrázky postavy.
+@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+
+var has_target: bool = false
+
+
+func _ready() -> void:
+	motion_mode = CharacterBody2D.MOTION_MODE_FLOATING
+	agent.path_desired_distance = 4.0
+	agent.target_desired_distance = 4.0
+
+	# Použijeme tvoji existující animaci se šesti snímky.
+	sprite.animation = \"default\"
+
+	# Zastavíme i případné automatické přehrávání.
+	# stop() zároveň vrátí animaci na snímek 0.
+	sprite.stop()
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+			set_destination(get_global_mouse_position())
+
+
+func set_destination(clicked_position: Vector2) -> void:
+	var navigation_map: RID = agent.get_navigation_map()
+
+	# Po spuštění počkáme, až bude navigační mapa připravená.
+	if NavigationServer2D.map_get_iteration_id(navigation_map) == 0:
+		return
+
+	var closest_point: Vector2 = NavigationServer2D.map_get_closest_point(
+		navigation_map,
+		clicked_position
+	)
+
+	# Kliknutí mimo navigační plochu ignorujeme.
+	# Tolerance 5 pixel řeší drobné nepřesnosti na hranici.
+	if clicked_position.distance_to(closest_point) > 5.0:
+		return
+
+	agent.target_position = closest_point
+	has_target = true
 
 
 func _physics_process(delta: float) -> void:
-	# Add the gravity.
-	if not is_on_floor():
-		velocity += get_gravity() * delta
+	# Bez cíle stojíme a zobrazujeme snímek 0.
+	if not has_target:
+		velocity = Vector2.ZERO
+		update_animation(Vector2.ZERO)
+		return
 
-	# Handle jump.
-	if Input.is_action_just_pressed(\"ui_accept\") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
+	# Na konci cesty také zastavíme pohyb i animaci.
+	if agent.is_navigation_finished():
+		velocity = Vector2.ZERO
+		has_target = false
+		update_animation(Vector2.ZERO)
+		return
 
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
-	var direction := Input.get_axis(\"ui_left\", \"ui_right\")
-	if direction:
-		velocity.x = direction * SPEED
-	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
+	# Navigace nám dá následující bod vypočítané cesty.
+	var next_point: Vector2 = agent.get_next_path_position()
+
+	# Rozdíl pozic udává směr a vzdálenost k tomuto bodu.
+	var offset: Vector2 = next_point - global_position
+
+	# Nastavíme rychlost směrem k bodu.
+	# U blízkého bodu krok zkrátíme, abychom ho nepřejeli.
+	velocity = offset.normalized() * minf(
+		speed,
+		offset.length() / delta
+	)
+
+	# Nejdřív skutečně provedeme pohyb včetně kolizí.
+	move_and_slide()
+
+	# Potom podle výsledného pohybu nastavíme animaci a otočení.
+	update_animation(get_real_velocity())
+	
+func update_animation(actual_velocity: Vector2) -> void:
+	# length() vrací velikost rychlosti bez ohledu na směr.
+	# Pohyb menší než 1 pixel za sekundu bereme jako stání,
+	# aby drobné nepřesnosti zbytečně nezapínaly animaci.
+	if actual_velocity.length() < 1.0:
+		sprite.stop()
+		return
+
+	# Postava se pohybuje, proto přehráváme chůzi.
+	# Opakované play() stejné animace ji nerestartuje.
+	sprite.play(\"default\")
+
+	# V Godotu roste X doprava:
+	# záporné X = pohyb doleva, kladné X = pohyb doprava.
+	# Při téměř svislé chůzi zachováme poslední otočení.
+	if absf(actual_velocity.x) > 1.0:
+		# Původní obrázek hledí doleva.
+		# Při pohybu doprava (kladné X) ho proto zrcadlíme.
+		sprite.flip_h = actual_velocity.x > 0.0
 
 	move_and_slide()
 "
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_g2els"]
-size = Vector2(206, 519)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3v2ag"]
 atlas = ExtResource("1_tuyoq")
@@ -85,17 +162,35 @@ animations = [{
 }],
 "loop": true,
 "name": &"default",
-"speed": 8.0
+"speed": 7.0
 }]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_fjrip"]
+radius = 20.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tuyoq"]
+radius = 121.52
+
 [node name="Player" type="CharacterBody2D"]
+motion_mode = 1
 script = SubResource("GDScript_3vyb7")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 0.5)
-shape = SubResource("RectangleShape2D_g2els")
-
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-41, -710)
 sprite_frames = SubResource("SpriteFrames_fulsm")
-autoplay = "default"
-frame_progress = 0.220858
+frame_progress = 0.503404
+flip_h = true
+
+[node name="kolize-chůze" type="CollisionShape2D" parent="."]
+position = Vector2(0, 0.5)
+shape = SubResource("CircleShape2D_fjrip")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+
+[node name="kolize s objekty" type="Area2D" parent="."]
+
+[node name="kolize s objekty" type="CollisionShape2D" parent="kolize s objekty"]
+position = Vector2(-30, -692)
+scale = Vector2(2, 2)
+shape = SubResource("CircleShape2D_tuyoq")
+one_way_collision_margin = 0.0
