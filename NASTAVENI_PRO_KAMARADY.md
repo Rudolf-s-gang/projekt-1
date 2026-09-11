@@ -2,7 +2,7 @@
 
 ## Co musí člen udělat
 
-Člen nejdřív nainstaluje a spustí Codex desktop. Potom vytvoří jeden dočasný úvodní chat, vloží do něj jediný prompt uvedený níže a řídí se jeho pokyny. Nemusí ručně instalovat Git ani GitHub CLI, klonovat repozitář nebo nastavovat automatizaci.
+Člen nejdřív nainstaluje a spustí Codex desktop. Potom vytvoří jeden dočasný úvodní chat, vloží do něj jediný prompt uvedený níže a řídí se jeho pokyny. Nemusí ručně instalovat Git ani GitHub CLI nebo klonovat repozitář.
 
 Codex může během nastavení požádat o potvrzení instalace systémových balíčků, přihlášení ke GitHubu a výběr cílové složky. Tyto bezpečnostní a přihlašovací kroky musí člen potvrdit osobně; prompt je nesmí obcházet.
 
@@ -19,14 +19,13 @@ Nastav mi kompletně lokální prostředí pro týmový Godot projekt Rudolf-s-g
 6. Naklonuj repozitář příkazem `gh repo clone Rudolf-s-gang/projekt-1 <zvolena-slozka>/projekt-1`. V naklonovaném repozitáři nastav `user.name` a `user.email` pouze lokálně, ne globálně. Absolutní cestu k ověřenému Godotu ulož do `.git/ai-local-config` jako `GODOT_EXECUTABLE=<absolutni-cesta>`; tento lokální soubor nikdy necommituj, nevkládej do něj žádné tajné údaje a nikdy jej nespouštěj ani nenačítej jako shellový skript. Cestu při spouštění bezpečně cituj, pokud obsahuje mezery. Ověř kořen repozitáře, čistý `git status --short`, větev `main`, remote `origin` a shodu lokálního `main` s `origin/main`. Nikdy nepoužívej force push, reset --hard, stash, merge ani rebase.
 7. Kompletně přečti soubor `AGENTS.md` z naklonovaného repozitáře a od této chvíle dodržuj jeho pravidla. Ověř také `.gitignore`, aby se necommitovaly `.godot/`, buildy, exporty, tajné údaje ani lokální nastavení editoru.
 8. Zajisti, aby Codex používal naklonovanou složku přímo jako lokální projekt, ne jako oddělený worktree. Pokud tuto změnu nelze udělat automaticky, dej mi právě jeden přesný krok v rozhraní Codexu, počkej na jeho dokončení a potom pokračuj.
-9. Nad touto stejnou lokální složkou vytvoř právě dva trvalé chaty: `Projekt 1 – Git ovládání` pro povely `začínám` a `končím` a `Projekt 1 – automatické zálohování` pouze pro hodinové kontroly. Nevytvářej nový chat při každém automatickém běhu.
-10. K zálohovacímu chatu připoj právě jednu aktivní automatizaci každých 60 minut. Při každém běhu musí nejdřív kompletně přečíst `AGENTS.md`. Pokud existuje `.git/ai-work-session`, provede pouze „Automatický checkpoint“. Pokud relace neexistuje, provede pouze „Nouzovou zálohu bez aktivní relace“. Bez relace a bez změn okamžitě skončí bez hlášení.
-11. Nouzová záloha smí bezpečně ověřené změny uložit pouze do jednoho commitu na nové větvi `rescue/<github-uzivatel>/zapomenuta-relace-<YYYYMMDD-HHMMSS>`. Nikdy nesmí commitovat nebo pushovat do `main`, automaticky vytvářet rescue pull request ani cokoliv slučovat.
-12. Ověř, že oba trvalé chaty používají stejný lokální repozitář, automatizace je pouze jedna, nevytváří další chaty a GitHub přihlášení i push oprávnění fungují. Test nesmí vytvořit běžný commit, push ani pull request.
-13. Nakonec mi napiš krátký výsledek každé kontroly, přesnou cestu projektu, nalezenou cestu a verzi Godotu 4, aktivní GitHub účet, názvy obou chatů a čas první automatické kontroly. Zelené potvrzení dej pouze tehdy, když je vše opravdu připravené. Při problému aktivuj bezpečnostní zámek podle `AGENTS.md` a uveď právě jeden bezpečný krok k nápravě.
+9. Nad touto lokální složkou vytvoř právě jeden trvalý chat `Projekt 1 – Git ovládání` pro povely `začínám`, `záloha` a `končím`. Nevytvářej zálohovací chat ani hodinovou či jinou automatizaci.
+10. Pokud na tomto počítači už existuje stará automatizace hodinového zálohování tohoto projektu, ukaž mi její přesný název a požádej mě o jediné potvrzení jejího vypnutí. Po potvrzení ji vypni nebo odstraň; jiné automatizace neměň.
+11. Ověř, že trvalý chat používá správný lokální repozitář a že GitHub přihlášení i push oprávnění fungují. Read-only test nesmí vytvořit commit, push ani pull request.
+12. Nakonec mi napiš krátký výsledek každé kontroly, přesnou cestu projektu, nalezenou cestu a verzi Godotu 4, aktivní GitHub účet a název trvalého chatu. Zelené potvrzení dej pouze tehdy, když je vše opravdu připravené. Při problému aktivuj bezpečnostní zámek podle `AGENTS.md` a uveď právě jeden bezpečný krok k nápravě.
 ```
 
-Po úspěšném dokončení může člen úvodní instalační chat archivovat. Pro každodenní práci používá pouze chat `Projekt 1 – Git ovládání`; automatický chat nechává běžet na pozadí.
+Po úspěšném dokončení může člen úvodní instalační chat archivovat. Pro každodenní práci používá pouze chat `Projekt 1 – Git ovládání`.
 
 ## Každodenní použití
 
@@ -38,6 +37,16 @@ začínám
 
 Codex se zeptá, na čem bude člen pracovat a zda chce začít z aktuálního `main`, nebo pokračovat z konkrétní existující větve. Pracovat v Godotu začne až po zeleném potvrzení Codexu.
 
+Pokud Codex při `začínám` najde zapomenuté změny, nejdřív je uloží do jediného lokálního commitu na nové větvi `rescue/...`. Potom nabídne jejich push na GitHub, ponechání pouze lokálně a čistý začátek z `main`, nebo pokračování v zachráněné práci. Rescue větev automaticky nemaže ani neslučuje.
+
+Během delší práce může člen kdykoli napsat:
+
+```text
+záloha
+```
+
+Codex vytvoří kontrolovaný záložní commit a pushne pouze aktivní pracovní větev. Pull request při tomto povelu nevytváří.
+
 Na konci člen uloží projekt v Godotu a napíše:
 
 ```text
@@ -46,8 +55,4 @@ končím
 
 Codex vytvoří závěrečný commit, push a pull request do `main`, ale nikdy jej nesloučí. Pull request zkontroluje a sloučí vlastník nebo jiný schválený člen.
 
-Pokud člen zapomene napsat `začínám`, automatizace může bezpečně ověřené změny zachránit do jediného commitu na nové větvi `rescue/...`. Po upozornění už člen projekt neupravuje a požádá vlastníka o kontrolu. Codex záchrannou větev nikdy automaticky nesloučí ani z ní nevytvoří pull request.
-
-## Omezení automatických záloh
-
-Lokální checkpoint proběhne jen při zapnutém počítači, běžící desktopové aplikaci, dostupném projektu a platném GitHub přihlášení. Codex nemůže zabránit otevření Godotu, ale při zjištěném problému nesmí potvrdit bezpečný začátek ani provést Git operace.
+Hodinové automatické zálohování se nepoužívá. Změny se ukládají při ručním povelu `záloha`, při `končím` nebo jako bezpečný rescue commit při příštím `začínám`.
