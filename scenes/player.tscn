@@ -178,7 +178,7 @@ script = SubResource("GDScript_3vyb7")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-41, -710)
 sprite_frames = SubResource("SpriteFrames_fulsm")
-frame_progress = 0.102376
+frame_progress = 0.503404
 flip_h = true
 
 [node name="kolize-chůze" type="CollisionShape2D" parent="."]
