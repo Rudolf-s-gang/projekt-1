@@ -10,7 +10,7 @@
 [sub_resource type="GDScript" id="GDScript_3vyb7"]
 script/source = "extends CharacterBody2D
 
-@export var speed: float = 100
+@export var speed: float = 150
 
 @onready var agent: NavigationAgent2D = $NavigationAgent2D
 # Uložíme si odkaz na uzel, který přehrává obrázky postavy.
@@ -51,8 +51,8 @@ func set_destination(clicked_position: Vector2) -> void:
 	)
 
 	# Kliknutí mimo navigační plochu ignorujeme.
-	# Tolerance 5 pixel řeší drobné nepřesnosti na hranici.
-	if clicked_position.distance_to(closest_point) > 5.0:
+	# Tolerance 10 pixel řeší drobné nepřesnosti na hranici.
+	if clicked_position.distance_to(closest_point) > 10.0:
 		return
 
 	agent.target_position = closest_point
@@ -111,8 +111,6 @@ func update_animation(actual_velocity: Vector2) -> void:
 		# Původní obrázek hledí doleva.
 		# Při pohybu doprava (kladné X) ho proto zrcadlíme.
 		sprite.flip_h = actual_velocity.x > 0.0
-
-	move_and_slide()
 "
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3v2ag"]
@@ -176,9 +174,10 @@ motion_mode = 1
 script = SubResource("GDScript_3vyb7")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(-34, -719)
+position = Vector2(-19, -701)
 sprite_frames = SubResource("SpriteFrames_fulsm")
-frame_progress = 0.572751
+frame = 2
+frame_progress = 0.2276
 flip_h = true
 
 [node name="kolize-chůze" type="CollisionShape2D" parent="."]
