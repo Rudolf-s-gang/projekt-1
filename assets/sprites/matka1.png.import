@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dpvh4xf2yadw0"
-path="res://.godot/imported/Tvor_zepredu.png-bd956cb1c8f53f4f780c5916809ef739.ctex"
+uid="uid://cfrddy42rckbf"
+path="res://.godot/imported/matka1.png-55ed809d257e33b9cb9eac49f9e34784.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/Tvor_zepredu.png"
-dest_files=["res://.godot/imported/Tvor_zepredu.png-bd956cb1c8f53f4f780c5916809ef739.ctex"]
+source_file="res://assets/sprites/matka1.png"
+dest_files=["res://.godot/imported/matka1.png-55ed809d257e33b9cb9eac49f9e34784.ctex"]
 
 [params]
 
