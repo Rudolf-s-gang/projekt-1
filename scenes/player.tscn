@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dd1o35fke0rvh"]
+[gd_scene load_steps=18 format=3 uid="uid://dd1o35fke0rvh"]
 
 [ext_resource type="Script" uid="uid://gd07wkp441lh" path="res://scripts/player.tres.gd" id="1_fjrip"]
 [ext_resource type="Texture2D" uid="uid://dq2ivstq2l05o" path="res://assets/sprites/walk_frame0.png" id="1_tuyoq"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://duovsim5epbij" path="res://assets/sprites/walk_frame3.png" id="4_ur7pv"]
 [ext_resource type="Texture2D" uid="uid://box0mhx0un346" path="res://assets/sprites/walk_frame4.png" id="5_y4r1p"]
 [ext_resource type="Texture2D" uid="uid://bj2udrfw2bapm" path="res://assets/sprites/walk_frame5.png" id="6_d2wvv"]
+[ext_resource type="Texture2D" uid="uid://c04n6ncidmjwr" path="res://assets/sprites/otec_predek.png" id="8_smehm"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3v2ag"]
 atlas = ExtResource("1_tuyoq")
@@ -72,8 +73,7 @@ script = ExtResource("1_fjrip")
 position = Vector2(-2.28, -84.12)
 scale = Vector2(0.12, 0.12)
 sprite_frames = SubResource("SpriteFrames_fulsm")
-frame = 1
-frame_progress = 0.02985
+frame_progress = 0.0865707
 flip_h = true
 
 [node name="kolize-chůze" type="CollisionShape2D" parent="."]
@@ -89,3 +89,9 @@ position = Vector2(-3.6, -83.04)
 scale = Vector2(0.24, 0.24)
 shape = SubResource("CircleShape2D_tuyoq")
 one_way_collision_margin = 0.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(0, -85)
+scale = Vector2(0.12, 0.12)
+texture = ExtResource("8_smehm")
