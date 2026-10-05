@@ -5,10 +5,9 @@ extends Node2D
 # "1 << 1" znamená druhou fyzikální vrstvu, tedy naši vrstvu Interakce.
 const INTERACTION_LAYER: int = 1 << 1
 
-# Stejnou toleranci 5 pixelů používáme také ve skriptu hráče.
-# Bod považujeme za pochozí, pokud je nejbližší bod navigace
-# vzdálený maximálně o tuto hodnotu.
-const WALKABLE_TOLERANCE: float = 5.0
+# Jak daleko od navigační oblasti ještě považujeme místo za průchozí.
+# Hodnota 10 pixelů dělá klikání u okrajů trochu příjemnější.
+const WALKABLE_TOLERANCE: float = 10.0
 
 # Jedna položka představuje jednu repliku.
 # "speaker" je jméno mluvčího a "text" je zobrazovaná věta.

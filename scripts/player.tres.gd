@@ -5,12 +5,35 @@ signal destination_reached
 @export var speed: float = 150
 
 @onready var agent: NavigationAgent2D = $NavigationAgent2D
-# Uložíme si odkaz na uzel, který přehrává obrázky postavy.
-@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+
+# Animovaný boční pohled používaný během chůze.
+@onready var sprite: AnimatedSprite2D = $"chůze"
+
+# Přední pohled používaný, když hráč stojí.
+@onready var front_sprite: Sprite2D = $"postava-zepředu"
 
 var has_target: bool = false
 # Během dialogu bude tato hodnota false.
 var movement_enabled: bool = true
+
+# Zobrazí stojící postavu čelem k obrazovce.
+func show_front_view() -> void:
+	# Boční animaci zastavíme a schováme.
+	sprite.stop()
+	sprite.hide()
+
+	# Zobrazíme přední obrázek.
+	front_sprite.show()
+
+
+# Přepne postavu na boční pohled připravený k chůzi.
+func show_side_view() -> void:
+	# Přední obrázek už nesmí být vidět.
+	front_sprite.hide()
+
+	# Zobrazíme animovaný boční pohled.
+	# Samotnou animaci spustíme až při skutečném pohybu.
+	sprite.show()
 
 
 func _ready() -> void:
@@ -21,9 +44,8 @@ func _ready() -> void:
 	# Použijeme tvoji existující animaci se šesti snímky.
 	sprite.animation = "default"
 
-	# Zastavíme i případné automatické přehrávání.
-	# stop() zároveň vrátí animaci na snímek 0.
-	sprite.stop()
+	# Hra začíná se stojící postavou otočenou čelem.
+	show_front_view()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -54,6 +76,9 @@ func set_destination(clicked_position: Vector2) -> void:
 
 	agent.target_position = closest_point
 	has_target = true
+	# Cíl je platný, proto se ještě před zahájením pohybu
+	# přepneme z předního na boční pohled.
+	show_side_view()
 
 func set_movement_enabled(enabled: bool) -> void:
 	# Uložíme nový stav pohybu.
@@ -73,7 +98,7 @@ func _physics_process(delta: float) -> void:
 		has_target = false
 		update_animation(Vector2.ZERO)
 		return
-	# Bez cíle stojíme a zobrazujeme snímek 0.
+	# Bez cíle stojíme a zobrazujeme přední pohled.
 	if not has_target:
 		velocity = Vector2.ZERO
 		update_animation(Vector2.ZERO)
@@ -112,7 +137,8 @@ func update_animation(actual_velocity: Vector2) -> void:
 	# Pohyb menší než 1 pixel za sekundu bereme jako stání,
 	# aby drobné nepřesnosti zbytečně nezapínaly animaci.
 	if actual_velocity.length() < 1.0:
-		sprite.stop()
+		# Postava se nepohybuje, proto zobrazíme přední pohled.
+		show_front_view()
 		return
 
 	# Postava se pohybuje, proto přehráváme chůzi.
