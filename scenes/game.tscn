@@ -1,27 +1,29 @@
-[gd_scene load_steps=45 format=3 uid="uid://cl2ga2sdnev7x"]
+[gd_scene load_steps=49 format=3 uid="uid://cl2ga2sdnev7x"]
 
 [ext_resource type="Script" uid="uid://cbkto5b3u56mj" path="res://scripts/game.gd" id="1_lnu2h"]
 [ext_resource type="PackedScene" uid="uid://dd1o35fke0rvh" path="res://scenes/player.tscn" id="1_uwrxv"]
-[ext_resource type="Texture2D" uid="uid://dd28eamxr1j3t" path="res://assets/sprites/mistnost (kopie).png" id="3_p57ef"]
-[ext_resource type="Texture2D" uid="uid://3xbld7olquc8" path="res://assets/sprites/hodiny_frame0.png" id="4_37s47"]
+[ext_resource type="Texture2D" uid="uid://dd28eamxr1j3t" path="res://assets/sprites/vizuály/mistnost (kopie).png" id="3_p57ef"]
+[ext_resource type="Texture2D" uid="uid://3xbld7olquc8" path="res://assets/sprites/animace/hodiny/hodiny_frame0.png" id="4_37s47"]
 [ext_resource type="PackedScene" uid="uid://ddmsca0e4lhpb" path="res://scenes/interakce.tscn" id="4_lbhrr"]
-[ext_resource type="Texture2D" uid="uid://dknttoma13utc" path="res://assets/sprites/hodiny_frame1.png" id="5_bt5mj"]
-[ext_resource type="Texture2D" uid="uid://181qmdogwdxi" path="res://assets/sprites/hrnec.png" id="5_kvpfn"]
-[ext_resource type="Texture2D" uid="uid://xcfkt186klo6" path="res://assets/sprites/hodiny_frame2.png" id="6_e1j6l"]
-[ext_resource type="Texture2D" uid="uid://dt3cg0qckwc80" path="res://assets/sprites/matka0.png" id="6_kvpfn"]
+[ext_resource type="Texture2D" uid="uid://dknttoma13utc" path="res://assets/sprites/animace/hodiny/hodiny_frame1.png" id="5_bt5mj"]
+[ext_resource type="Texture2D" uid="uid://181qmdogwdxi" path="res://assets/sprites/vizuály/hrnec.png" id="5_kvpfn"]
+[ext_resource type="Texture2D" uid="uid://xcfkt186klo6" path="res://assets/sprites/animace/hodiny/hodiny_frame2.png" id="6_e1j6l"]
+[ext_resource type="Texture2D" uid="uid://dt3cg0qckwc80" path="res://assets/sprites/vizuály/matka0.png" id="6_kvpfn"]
 [ext_resource type="Script" uid="uid://c746odyk1l76l" path="res://scripts/dialogue_ui.gd" id="6_p57ef"]
-[ext_resource type="Texture2D" uid="uid://dpegvtpsicyde" path="res://assets/sprites/harant.png" id="7_dinhu"]
-[ext_resource type="Texture2D" uid="uid://dxqpka2ntifv6" path="res://assets/sprites/hodiny_frame3.png" id="7_pl11u"]
-[ext_resource type="Texture2D" uid="uid://cvqi52kmgvpd6" path="res://assets/sprites/dvere_frame0.png" id="7_vtaks"]
-[ext_resource type="Texture2D" uid="uid://chqat1tkcu2b8" path="res://assets/sprites/hodiny_frame4.png" id="8_bhx41"]
-[ext_resource type="Texture2D" uid="uid://d8tjntlce03" path="res://assets/sprites/dvere_frame1.png" id="8_kvpfn"]
-[ext_resource type="Texture2D" uid="uid://e53sf7p5qmjp" path="res://assets/sprites/dvere_frame2.png" id="9_dinhu"]
-[ext_resource type="Texture2D" uid="uid://dy3ewjwgb51os" path="res://assets/sprites/hodiny_frame5.png" id="9_qnb83"]
-[ext_resource type="Texture2D" uid="uid://d38rl62jr3v3x" path="res://assets/sprites/dvere_frame3.png" id="10_kvuet"]
-[ext_resource type="Texture2D" uid="uid://cstkx1bck2q0l" path="res://assets/sprites/hodiny_frame6.png" id="10_sww3w"]
-[ext_resource type="Texture2D" uid="uid://dp42d0rk6b6l7" path="res://assets/sprites/hodiny_frame7.png" id="11_suyxu"]
-[ext_resource type="Texture2D" uid="uid://hmg4a8bnbs1q" path="res://assets/sprites/hodiny_frame8.png" id="12_sgl2t"]
-[ext_resource type="Texture2D" uid="uid://dd4874wq2youl" path="res://assets/sprites/hodiny_frame9.png" id="13_qouja"]
+[ext_resource type="Texture2D" uid="uid://dpegvtpsicyde" path="res://assets/sprites/vizuály/harant.png" id="7_dinhu"]
+[ext_resource type="Texture2D" uid="uid://dxqpka2ntifv6" path="res://assets/sprites/animace/hodiny/hodiny_frame3.png" id="7_pl11u"]
+[ext_resource type="Texture2D" uid="uid://cvqi52kmgvpd6" path="res://assets/sprites/animace/dveře/dvere_frame0.png" id="7_vtaks"]
+[ext_resource type="Texture2D" uid="uid://chqat1tkcu2b8" path="res://assets/sprites/animace/hodiny/hodiny_frame4.png" id="8_bhx41"]
+[ext_resource type="Texture2D" uid="uid://d8tjntlce03" path="res://assets/sprites/animace/dveře/dvere_frame1.png" id="8_kvpfn"]
+[ext_resource type="Texture2D" uid="uid://e53sf7p5qmjp" path="res://assets/sprites/animace/dveře/dvere_frame2.png" id="9_dinhu"]
+[ext_resource type="Texture2D" uid="uid://dy3ewjwgb51os" path="res://assets/sprites/animace/hodiny/hodiny_frame5.png" id="9_qnb83"]
+[ext_resource type="Texture2D" uid="uid://d38rl62jr3v3x" path="res://assets/sprites/animace/dveře/dvere_frame3.png" id="10_kvuet"]
+[ext_resource type="Texture2D" uid="uid://cstkx1bck2q0l" path="res://assets/sprites/animace/hodiny/hodiny_frame6.png" id="10_sww3w"]
+[ext_resource type="Texture2D" uid="uid://dp42d0rk6b6l7" path="res://assets/sprites/animace/hodiny/hodiny_frame7.png" id="11_suyxu"]
+[ext_resource type="Texture2D" uid="uid://hmg4a8bnbs1q" path="res://assets/sprites/animace/hodiny/hodiny_frame8.png" id="12_sgl2t"]
+[ext_resource type="Texture2D" uid="uid://dd4874wq2youl" path="res://assets/sprites/animace/hodiny/hodiny_frame9.png" id="13_qouja"]
+[ext_resource type="Texture2D" uid="uid://bummay1euntbv" path="res://assets/sprites/vizuály/Inventar.png" id="23_bt5mj"]
+[ext_resource type="Script" uid="uid://dh5nb45bx3dxy" path="res://scripts/inventář.gd" id="23_e1j6l"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_yqjtg"]
 vertices = PackedVector2Array(-3164.22, 580.922, -4140.66, 519.367, -3918.85, 418.539, -3129.52, 341.344, -2970.29, 465.352, -1453.15, 594.242, -1321.55, 494.328, 65.2891, 523.641, -48.4766, 436.617, 59.1484, 444.727, -288.578, 501.172, -674.492, 436.453, -1112.67, 398.953)
@@ -159,6 +161,11 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vtaks"]
 size = Vector2(76, 195)
 
+[sub_resource type="CanvasTexture" id="CanvasTexture_37s47"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bt5mj"]
+size = Vector2(40, 39)
+
 [node name="Game" type="Node2D"]
 position = Vector2(639, 407)
 script = ExtResource("1_lnu2h")
@@ -290,3 +297,56 @@ sprite_frames = SubResource("SpriteFrames_ssvqc")
 [node name="dveře-kolize" type="CollisionShape2D" parent="dveře"]
 position = Vector2(-534, 192)
 shape = SubResource("RectangleShape2D_vtaks")
+
+[node name="hračka" parent="." instance=ExtResource("4_lbhrr")]
+position = Vector2(68, 223)
+
+[node name="Sprite2D" type="Sprite2D" parent="hračka"]
+texture = SubResource("CanvasTexture_37s47")
+
+[node name="ColorRect" type="ColorRect" parent="hračka"]
+offset_left = -21.0
+offset_top = -22.0
+offset_right = 19.0
+offset_bottom = 18.0
+color = Color(0.133937, 0.442363, 0.231342, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hračka"]
+position = Vector2(-1, -2)
+shape = SubResource("RectangleShape2D_bt5mj")
+
+[node name="Inventář" type="CanvasLayer" parent="."]
+script = ExtResource("23_e1j6l")
+
+[node name="inventář-tlačítko" type="Button" parent="Inventář"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -80.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = 80.0
+grow_horizontal = 0
+text = "Inventory"
+
+[node name="InventoryBackground" type="PanelContainer" parent="Inventář"]
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -523.5
+offset_top = 10.0
+offset_right = 523.5
+offset_bottom = 182.0
+grow_horizontal = 2
+
+[node name="InventoryMargin" type="MarginContainer" parent="Inventář/InventoryBackground"]
+layout_mode = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 30
+
+[node name="InventoryPanel" type="TextureRect" parent="Inventář/InventoryBackground/InventoryMargin"]
+layout_mode = 2
+texture = ExtResource("23_bt5mj")
