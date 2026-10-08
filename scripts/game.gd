@@ -55,13 +55,13 @@ const FAMILY_DIALOGUE = [
 # @onready znamená, že se hodnota načte až po vytvoření uzlů scény.
 @onready var navigation_region: NavigationRegion2D = $NavigationRegion2D
 
-# Hlavní scéna bude řídit hráče a dialog.
+# Hlavní scéna bude řídit hráče, dialog a inventář.
 @onready var player = $Player
-@onready var dialogue_ui = $DialogueUI
+@onready var dialogue_ui = $"textová okna/DialogueUI"
+@onready var inventory_ui = $"textová okna/Inventář"
 
 # Bod, ke kterému hráč přijde před zahájením rodinného dialogu.
-@onready var family_interaction_point: Marker2D = $RodinaInterakce/InteractionPoint
-
+@onready var family_interaction_point: Marker2D = $interakce/RodinaInterakce/InteractionPoint
 # Pamatujeme si současný kurzor.
 # Díky tomu ho nebudeme zbytečně nastavovat šedesátkrát za sekundu.
 var current_cursor := Input.CURSOR_ARROW
@@ -79,10 +79,17 @@ func _ready() -> void:
 
 	# Po skončení dialogu se zavolá funkce, která hráče uvolní.
 	dialogue_ui.dialogue_finished.connect(_on_dialogue_finished)
+	# Otevření a zavření inventáře oznámíme hlavní scéně.
+	inventory_ui.inventory_opened.connect(_on_inventory_opened)
+	inventory_ui.inventory_closed.connect(_on_inventory_closed)
 
 func _input(event: InputEvent) -> void:
 	# Během rozhovoru kliknutí zpracovává DialogueUI.
 	if dialogue_ui.is_active:
+		return
+
+	# Při otevřeném inventáři nesmí kliknutí ovládat místnost.
+	if inventory_ui.is_open:
 		return
 
 	# Pokračujeme pouze při stisknutí levého tlačítka.
@@ -117,6 +124,11 @@ func _input(event: InputEvent) -> void:
 
 
 func _physics_process(_delta: float) -> void:
+	# Během dialogu a práce s inventářem nepoužíváme
+	# kurzory určené pro objekty v herním světě.
+	if dialogue_ui.is_active or inventory_ui.is_open:
+		set_cursor(Input.CURSOR_ARROW)
+		return
 	# Pozice myši v souřadnicích herního světa.
 	# Funguje správně i při použití Camera2D.
 	var mouse_position := get_global_mouse_position()
@@ -201,6 +213,7 @@ func _on_player_destination_reached() -> void:
 
 	# Hráč během dialogu nesmí chodit.
 	player.set_movement_enabled(false)
+	inventory_ui.set_available(false)
 
 	# Předáme připravené repliky dialogovému rozhraní.
 	dialogue_ui.start_dialogue(FAMILY_DIALOGUE)
@@ -209,3 +222,21 @@ func _on_player_destination_reached() -> void:
 func _on_dialogue_finished() -> void:
 	# Po poslední replice znovu povolíme pohyb.
 	player.set_movement_enabled(true)
+	inventory_ui.set_available(true)
+
+
+func _on_inventory_opened() -> void:
+	# Otevření inventáře zastaví rozehranou cestu
+	# a zobrazí stojící postavu zepředu.
+	player.set_movement_enabled(false)
+
+	# Pokud hráč mířil k rodině, čekající rozhovor zrušíme.
+	# Jinak by se mohl spustit až po některé pozdější cestě.
+	pending_family_dialogue = false
+
+
+func _on_inventory_closed() -> void:
+	# Po zavření inventáře znovu povolíme pohyb.
+	# Podmínka chrání hráče pro případ, že právě probíhá dialog.
+	if not dialogue_ui.is_active:
+		player.set_movement_enabled(true)

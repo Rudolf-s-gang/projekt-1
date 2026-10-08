@@ -24,6 +24,7 @@
 [ext_resource type="Texture2D" uid="uid://dd4874wq2youl" path="res://assets/sprites/animace/hodiny/hodiny_frame9.png" id="13_qouja"]
 [ext_resource type="Texture2D" uid="uid://bummay1euntbv" path="res://assets/sprites/vizuály/Inventar.png" id="23_bt5mj"]
 [ext_resource type="Script" uid="uid://dh5nb45bx3dxy" path="res://scripts/inventář.gd" id="23_e1j6l"]
+[ext_resource type="Texture2D" uid="uid://dsmogyxefrp54" path="res://assets/sprites/vizuály/soska.png" id="23_pl11u"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_yqjtg"]
 vertices = PackedVector2Array(-3164.22, 580.922, -4140.66, 519.367, -3918.85, 418.539, -3129.52, 341.344, -2970.29, 465.352, -1453.15, 594.242, -1321.55, 494.328, 65.2891, 523.641, -48.4766, 436.617, 59.1484, 444.727, -288.578, 501.172, -674.492, 436.453, -1112.67, 398.953)
@@ -161,10 +162,8 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vtaks"]
 size = Vector2(76, 195)
 
-[sub_resource type="CanvasTexture" id="CanvasTexture_37s47"]
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bt5mj"]
-size = Vector2(40, 39)
+size = Vector2(22, 39)
 
 [node name="Game" type="Node2D"]
 position = Vector2(639, 407)
@@ -172,7 +171,8 @@ script = ExtResource("1_lnu2h")
 
 [node name="Player" parent="." instance=ExtResource("1_uwrxv")]
 visibility_layer = 513
-position = Vector2(-449, 315)
+z_index = 1
+position = Vector2(-331, 306)
 
 [node name="pozadí" type="Sprite2D" parent="."]
 z_index = -10
@@ -186,63 +186,131 @@ position = Vector2(541, 85)
 scale = Vector2(0.262911, 0.450143)
 navigation_polygon = SubResource("NavigationPolygon_yqjtg")
 
-[node name="Hodiny" type="Area2D" parent="."]
-position = Vector2(-270, 14)
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(-0.876221, 0)
+offset = Vector2(0, 50)
+zoom = Vector2(0.95, 0.95)
+
+[node name="interakce" type="Node" parent="."]
+
+[node name="Hodiny" type="Area2D" parent="interakce"]
+position = Vector2(369, 421)
 collision_layer = 2
 collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hodiny"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="interakce/Hodiny"]
 visible = false
 shape = SubResource("RectangleShape2D_yqjtg")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Hodiny"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="interakce/Hodiny"]
 position = Vector2(-2, 19)
 scale = Vector2(0.6, 0.6)
 sprite_frames = SubResource("SpriteFrames_pr1ej")
 autoplay = "default"
 frame_progress = 0.942104
 
-[node name="hrnec" parent="." instance=ExtResource("4_lbhrr")]
-position = Vector2(267, 122)
+[node name="hrnec" parent="interakce" instance=ExtResource("4_lbhrr")]
+position = Vector2(906, 529)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="hrnec"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="interakce/hrnec"]
 position = Vector2(-79, 0)
 shape = SubResource("RectangleShape2D_iywne")
 
-[node name="Sprite2D" type="Sprite2D" parent="hrnec"]
+[node name="Sprite2D" type="Sprite2D" parent="interakce/hrnec"]
 position = Vector2(-80, 2)
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("5_kvpfn")
 
-[node name="RodinaInterakce" parent="." groups=["family_dialogue"] instance=ExtResource("4_lbhrr")]
-position = Vector2(127, 62)
+[node name="RodinaInterakce" parent="interakce" groups=["family_dialogue"] instance=ExtResource("4_lbhrr")]
+position = Vector2(766, 469)
 
-[node name="Sprite2D" type="Sprite2D" parent="RodinaInterakce"]
+[node name="Sprite2D" type="Sprite2D" parent="interakce/RodinaInterakce"]
 position = Vector2(407, 170)
 scale = Vector2(0.12, 0.119)
 texture = ExtResource("6_kvpfn")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RodinaInterakce"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="interakce/RodinaInterakce"]
 position = Vector2(414, 186)
 scale = Vector2(0.0809247, 0.0800042)
 shape = SubResource("RectangleShape2D_p57ef")
 
-[node name="InteractionPoint" type="Marker2D" parent="RodinaInterakce"]
+[node name="InteractionPoint" type="Marker2D" parent="interakce/RodinaInterakce"]
 position = Vector2(218, 244)
 
-[node name="Sprite2D2" type="Sprite2D" parent="RodinaInterakce"]
+[node name="Sprite2D2" type="Sprite2D" parent="interakce/RodinaInterakce"]
 position = Vector2(61, 182)
 scale = Vector2(0.12, 0.12)
 texture = ExtResource("7_dinhu")
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="RodinaInterakce"]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="interakce/RodinaInterakce"]
 position = Vector2(52.5, 184.75)
 shape = SubResource("RectangleShape2D_dinhu")
 
-[node name="DialogueUI" type="CanvasLayer" parent="."]
+[node name="dveře" parent="interakce" instance=ExtResource("4_lbhrr")]
+position = Vector2(639, 407)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="interakce/dveře"]
+position = Vector2(-526, 190)
+scale = Vector2(0.65, 0.65)
+sprite_frames = SubResource("SpriteFrames_ssvqc")
+
+[node name="dveře-kolize" type="CollisionShape2D" parent="interakce/dveře"]
+position = Vector2(-534, 192)
+shape = SubResource("RectangleShape2D_vtaks")
+
+[node name="hračka" parent="interakce" instance=ExtResource("4_lbhrr")]
+position = Vector2(707, 630)
+
+[node name="Sprite2D" type="Sprite2D" parent="interakce/hračka"]
+scale = Vector2(0.12, 0.12)
+texture = ExtResource("23_pl11u")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="interakce/hračka"]
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_bt5mj")
+
+[node name="textová okna" type="Node" parent="."]
+
+[node name="Inventář" type="CanvasLayer" parent="textová okna"]
+script = ExtResource("23_e1j6l")
+
+[node name="inventář-tlačítko" type="Button" parent="textová okna/Inventář"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -80.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = 80.0
+grow_horizontal = 0
+text = "Inventory"
+
+[node name="InventoryBackground" type="PanelContainer" parent="textová okna/Inventář"]
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -523.5
+offset_top = 10.0
+offset_right = 523.5
+offset_bottom = 182.0
+grow_horizontal = 2
+
+[node name="InventoryMargin" type="MarginContainer" parent="textová okna/Inventář/InventoryBackground"]
+layout_mode = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 30
+
+[node name="InventoryPanel" type="TextureRect" parent="textová okna/Inventář/InventoryBackground/InventoryMargin"]
+layout_mode = 2
+texture = ExtResource("23_bt5mj")
+
+[node name="DialogueUI" type="CanvasLayer" parent="textová okna"]
 script = ExtResource("6_p57ef")
 
-[node name="DialoguePanel" type="PanelContainer" parent="DialogueUI"]
+[node name="DialoguePanel" type="PanelContainer" parent="textová okna/DialogueUI"]
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
@@ -256,97 +324,28 @@ grow_vertical = 0
 size_flags_horizontal = 4
 size_flags_vertical = 8
 
-[node name="MarginContainer" type="MarginContainer" parent="DialogueUI/DialoguePanel"]
+[node name="MarginContainer" type="MarginContainer" parent="textová okna/DialogueUI/DialoguePanel"]
 layout_mode = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 15
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 15
 
-[node name="VBoxContainer" type="VBoxContainer" parent="DialogueUI/DialoguePanel/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="textová okna/DialogueUI/DialoguePanel/MarginContainer"]
 layout_mode = 2
 
-[node name="SpeakerLabel" type="Label" parent="DialogueUI/DialoguePanel/MarginContainer/VBoxContainer"]
+[node name="SpeakerLabel" type="Label" parent="textová okna/DialogueUI/DialoguePanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Grunt"
 
-[node name="TextLabel" type="RichTextLabel" parent="DialogueUI/DialoguePanel/MarginContainer/VBoxContainer"]
+[node name="TextLabel" type="RichTextLabel" parent="textová okna/DialogueUI/DialoguePanel/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 text = "Kde je večeře? Už mi kručí v břiše?
 "
 
-[node name="HintLabel" type="Label" parent="DialogueUI/DialoguePanel/MarginContainer/VBoxContainer"]
+[node name="HintLabel" type="Label" parent="textová okna/DialogueUI/DialoguePanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Kliknutím pokračuj"
 horizontal_alignment = 2
-
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(-0.876221, 0)
-offset = Vector2(0, 50)
-zoom = Vector2(0.95, 0.95)
-
-[node name="dveře" parent="." instance=ExtResource("4_lbhrr")]
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="dveře"]
-position = Vector2(-526, 190)
-scale = Vector2(0.65, 0.65)
-sprite_frames = SubResource("SpriteFrames_ssvqc")
-
-[node name="dveře-kolize" type="CollisionShape2D" parent="dveře"]
-position = Vector2(-534, 192)
-shape = SubResource("RectangleShape2D_vtaks")
-
-[node name="hračka" parent="." instance=ExtResource("4_lbhrr")]
-position = Vector2(68, 223)
-
-[node name="Sprite2D" type="Sprite2D" parent="hračka"]
-texture = SubResource("CanvasTexture_37s47")
-
-[node name="ColorRect" type="ColorRect" parent="hračka"]
-offset_left = -21.0
-offset_top = -22.0
-offset_right = 19.0
-offset_bottom = 18.0
-color = Color(0.133937, 0.442363, 0.231342, 1)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="hračka"]
-position = Vector2(-1, -2)
-shape = SubResource("RectangleShape2D_bt5mj")
-
-[node name="Inventář" type="CanvasLayer" parent="."]
-script = ExtResource("23_e1j6l")
-
-[node name="inventář-tlačítko" type="Button" parent="Inventář"]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -80.0
-offset_top = 20.0
-offset_right = -20.0
-offset_bottom = 80.0
-grow_horizontal = 0
-text = "Inventory"
-
-[node name="InventoryBackground" type="PanelContainer" parent="Inventář"]
-visible = false
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -523.5
-offset_top = 10.0
-offset_right = 523.5
-offset_bottom = 182.0
-grow_horizontal = 2
-
-[node name="InventoryMargin" type="MarginContainer" parent="Inventář/InventoryBackground"]
-layout_mode = 2
-theme_override_constants/margin_left = 40
-theme_override_constants/margin_top = 30
-theme_override_constants/margin_right = 40
-theme_override_constants/margin_bottom = 30
-
-[node name="InventoryPanel" type="TextureRect" parent="Inventář/InventoryBackground/InventoryMargin"]
-layout_mode = 2
-texture = ExtResource("23_bt5mj")
