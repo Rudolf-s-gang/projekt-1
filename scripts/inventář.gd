@@ -34,3 +34,16 @@ func toggle_inventory() -> void:
 	else:
 		inventory_button.text = "Inventory"
 		inventory_closed.emit()
+
+
+func set_available(available: bool) -> void:
+	# Disabled znamená, že tlačítko nereaguje na kliknutí.
+	inventory_button.disabled = not available
+
+	# Pokud inventář zakážeme ve chvíli, kdy je otevřený,
+	# bezpečně ho také zavřeme.
+	if not available and is_open:
+		is_open = false
+		inventory_background.hide()
+		inventory_button.text = "Inventory"
+		inventory_closed.emit()
