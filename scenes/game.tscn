@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://cl2ga2sdnev7x"]
+[gd_scene load_steps=50 format=3 uid="uid://cl2ga2sdnev7x"]
 
 [ext_resource type="Script" uid="uid://cbkto5b3u56mj" path="res://scripts/game.gd" id="1_lnu2h"]
 [ext_resource type="PackedScene" uid="uid://dd1o35fke0rvh" path="res://scenes/player.tscn" id="1_uwrxv"]
@@ -25,6 +25,7 @@
 [ext_resource type="Texture2D" uid="uid://bummay1euntbv" path="res://assets/sprites/vizuály/Inventar.png" id="23_bt5mj"]
 [ext_resource type="Script" uid="uid://dh5nb45bx3dxy" path="res://scripts/inventář.gd" id="23_e1j6l"]
 [ext_resource type="Texture2D" uid="uid://dsmogyxefrp54" path="res://assets/sprites/vizuály/soska.png" id="23_pl11u"]
+[ext_resource type="Script" uid="uid://cudc40yy56fr3" path="res://scripts/inventory_slot.gd" id="25_bhx41"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_yqjtg"]
 vertices = PackedVector2Array(-3164.22, 580.922, -4140.66, 519.367, -3918.85, 418.539, -3129.52, 341.344, -2970.29, 465.352, -1453.15, 594.242, -1321.55, 494.328, 65.2891, 523.641, -48.4766, 436.617, 59.1484, 444.727, -288.578, 501.172, -674.492, 436.453, -1112.67, 398.953)
@@ -306,6 +307,57 @@ theme_override_constants/margin_bottom = 30
 [node name="InventoryPanel" type="TextureRect" parent="textová okna/Inventář/InventoryBackground/InventoryMargin"]
 layout_mode = 2
 texture = ExtResource("23_bt5mj")
+
+[node name="ItemSlot1" type="TextureRect" parent="textová okna/Inventář/InventoryBackground/InventoryMargin/InventoryPanel"]
+layout_mode = 1
+offset_left = 13.0
+offset_top = 13.0
+offset_right = 99.0
+offset_bottom = 99.0
+script = ExtResource("25_bhx41")
+
+[node name="ItemSlot2" type="TextureRect" parent="textová okna/Inventář/InventoryBackground/InventoryMargin/InventoryPanel"]
+layout_mode = 1
+offset_left = 120.0
+offset_top = 13.0
+offset_right = 206.0
+offset_bottom = 99.0
+script = ExtResource("25_bhx41")
+
+[node name="ItemSlot3" type="TextureRect" parent="textová okna/Inventář/InventoryBackground/InventoryMargin/InventoryPanel"]
+layout_mode = 1
+offset_left = 227.0
+offset_top = 13.0
+offset_right = 313.0
+offset_bottom = 99.0
+
+[node name="ItemSlot4" type="TextureRect" parent="textová okna/Inventář/InventoryBackground/InventoryMargin/InventoryPanel"]
+layout_mode = 1
+offset_left = 334.0
+offset_top = 13.0
+offset_right = 420.0
+offset_bottom = 99.0
+
+[node name="CombineSlot1" type="TextureRect" parent="textová okna/Inventář/InventoryBackground/InventoryMargin/InventoryPanel"]
+layout_mode = 1
+offset_left = 542.0
+offset_top = 14.0
+offset_right = 626.0
+offset_bottom = 98.0
+
+[node name="CombineSlot2" type="TextureRect" parent="textová okna/Inventář/InventoryBackground/InventoryMargin/InventoryPanel"]
+layout_mode = 1
+offset_left = 633.0
+offset_top = 14.0
+offset_right = 717.0
+offset_bottom = 98.0
+
+[node name="ResultSlot" type="TextureRect" parent="textová okna/Inventář/InventoryBackground/InventoryMargin/InventoryPanel"]
+layout_mode = 1
+offset_left = 864.0
+offset_top = 14.0
+offset_right = 949.0
+offset_bottom = 99.0
 
 [node name="DialogueUI" type="CanvasLayer" parent="textová okna"]
 script = ExtResource("6_p57ef")
